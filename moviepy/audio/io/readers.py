@@ -235,7 +235,7 @@ class FFMPEG_AudioReader:
                         current_f_end  <
                                new_bufferstart + self.buffersize):
                 # We already have one bit of what must be read
-                conserved = current_f_end - new_bufferstart + 1
+                conserved = current_f_end - new_bufferstart
                 chunksize = self.buffersize-conserved
                 array = self.read_chunk(chunksize)
                 self.buffer = np.vstack([self.buffer[-conserved:], array])
