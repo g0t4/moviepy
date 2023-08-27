@@ -95,7 +95,7 @@ class FFMPEG_VideoWriter:
             ])
         cmd.extend([
             '-vcodec', codec,
-            '-preset', preset,
+            # '-preset', preset, # testing => drop changing preset (leave frames as is)
         ])
         if ffmpeg_params is not None:
             cmd.extend(ffmpeg_params)
