@@ -30,6 +30,8 @@ class FFMPEG_VideoReader:
                  target_resolution=None, resize_algo='bicubic',
                  fps_source='tbr'):
 
+        pix_fmt="yuv444p" # force read yuv444p
+
         self.filename = filename
         self.proc = None
         infos = ffmpeg_parse_infos(filename, print_infos, check_duration,
@@ -91,8 +93,10 @@ class FFMPEG_VideoReader:
                 '-f', 'image2pipe',
                 '-vf', 'scale=%d:%d' % tuple(self.size),
                 '-sws_flags', self.resize_algo,
-                "-pix_fmt", self.pix_fmt,
+                "-pix_fmt", self.pix_fmt, # TODO drop this if not converting?! should be a parameter to VideoFileClip (not just FFMPEG_VideoReader)
                 '-vcodec', 'rawvideo', '-'])
+        print(f"reader: {cmd}")
+
         popen_params = {"bufsize": self.bufsize,
                         "stdout": sp.PIPE,
                         "stderr": sp.PIPE,

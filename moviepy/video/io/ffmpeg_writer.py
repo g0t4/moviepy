@@ -84,7 +84,7 @@ class FFMPEG_VideoWriter:
             '-f', 'rawvideo',
             '-vcodec', 'rawvideo',
             '-s', '%dx%d' % (size[0], size[1]),
-            '-pix_fmt', 'rgba' if withmask else 'rgb24',
+            '-pix_fmt', 'rgba' if withmask else 'yuv444p', # force yuv444p for testing
             '-r', '%.02f' % fps,
             '-an', '-i', '-'
         ]
@@ -110,12 +110,16 @@ class FFMPEG_VideoWriter:
         if ((codec == 'libx264') and
                 (size[0] % 2 == 0) and
                 (size[1] % 2 == 0)):
-            cmd.extend([
-                '-pix_fmt', 'yuv420p'
-            ])
+            # TODO why was this in here a second time? 
+            # cmd.extend([
+            #     '-pix_fmt', 'yuv444p'
+            # ])
+            pass
+
         cmd.extend([
             filename
         ])
+        print(f"writer: {cmd}")
 
         popen_params = {"stdout": DEVNULL,
                         "stderr": logfile,
