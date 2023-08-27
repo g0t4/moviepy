@@ -33,6 +33,7 @@ def test_read_pix_fmt_yuv444p():
     # check frame size
     frame0 = clip.get_frame(0)
     assert frame0.shape == (720, 1280, 3)
+    # ffmpeg -pix_fmts  # list supported formats w/ # components (ie 3 for yuv444p and rgb24), BPP (per pixel) and BIT_DEPTH (bpc - per component)
 
     # todo convert to rgb24 and compare?
     close_all_clips(locals())
