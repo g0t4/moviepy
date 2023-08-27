@@ -65,6 +65,7 @@ def test_read_yuv444p_and_write_to_yuv444p():
 
     clip2 = VideoFileClip(tmp_video_output, pix_fmt='yuv444p')
     assert clip2.duration == 1.0  # FAILs, why is length increasing when I write the file? even if I use ffmpeg at command line to go from yuv420p to yuv444p for this same original file, the result is longer? this must be "spreading" values out and causing the failure to compare actual frames?
+    # I don't necessarily care about the length so much as I want to know that pass through is literally leaving frames as is (so there shouldn't be any conversion that would trigger ffmpeg to extend duration)... and yet there is so it seems the current ffmpeg write options are triggering some sort of conversion (raw to whatever?) and if so ... can I maybe pass raw w/ -vcoded=h264? I tried and it failed on me... so I am stuck for now and will look at this when I get time)
     return
     original_frame0 = clip.get_frame(0)
     new_frame0 = clip2.get_frame(0)
