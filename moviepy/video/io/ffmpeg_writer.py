@@ -110,7 +110,7 @@ class FFMPEG_VideoWriter:
         if ((codec == 'libx264') and
                 (size[0] % 2 == 0) and
                 (size[1] % 2 == 0)):
-            # TODO why was this in here a second time? 
+            # TODO this appears duplicated? if not was the first ref to pix_fmt to tell ffmpeg the rawvideo should be treated as rgb24? and then this time is to convert that to yuv420p (originally) and here I have yuv444p... I need to read the full command string to figure that out
             # cmd.extend([
             #     '-pix_fmt', 'yuv444p'
             # ])
