@@ -77,6 +77,7 @@ class FFMPEG_VideoWriter:
         self.ext = self.filename.split(".")[-1]
 
         # order is important
+        src_pix_fmt = 'rgba' if withmask else 'rgb24'
         cmd = [
             get_setting("FFMPEG_BINARY"),
             '-y',
@@ -84,7 +85,7 @@ class FFMPEG_VideoWriter:
             '-f', 'rawvideo',
             '-vcodec', 'rawvideo',
             '-s', '%dx%d' % (size[0], size[1]),
-            '-pix_fmt', 'rgba' if withmask else 'rgb24',
+            '-pix_fmt', src_pix_fmt,
             '-r', '%.02f' % fps,
             '-an', '-i', '-'
         ]
