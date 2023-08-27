@@ -108,11 +108,14 @@ class FFMPEG_VideoWriter:
         if threads is not None:
             cmd.extend(["-threads", str(threads)])
 
+        output_pix_fmt = None
         if ((codec == 'libx264') and
                 (size[0] % 2 == 0) and
                 (size[1] % 2 == 0)):
+            if output_pix_fmt is None:
+                output_pix_fmt = 'yuv420p'
             cmd.extend([
-                '-pix_fmt', 'yuv420p'
+                '-pix_fmt', output_pix_fmt
             ])
         cmd.extend([
             filename
