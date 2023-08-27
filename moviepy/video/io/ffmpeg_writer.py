@@ -95,7 +95,7 @@ class FFMPEG_VideoWriter:
             ])
         cmd.extend([
             '-vcodec', codec,
-            '-preset', preset,
+            '-preset', preset, # FYI medium is fine, likely should be configurable (I might want a superfast option for rapid testing vs slow for publishing export)
         ])
         if ffmpeg_params is not None:
             cmd.extend(ffmpeg_params)
@@ -116,6 +116,7 @@ class FFMPEG_VideoWriter:
         cmd.extend([
             filename
         ])
+        print(f"write: {cmd}")
 
         popen_params = {"stdout": DEVNULL,
                         "stderr": logfile,
