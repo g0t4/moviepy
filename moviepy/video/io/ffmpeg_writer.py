@@ -203,7 +203,7 @@ class FFMPEG_VideoWriter:
 def ffmpeg_write_video(clip, filename, fps, codec="libx264", bitrate=None,
                        preset="medium", withmask=False, write_logfile=False,
                        audiofile=None, verbose=True, threads=None, ffmpeg_params=None,
-                       logger='bar'):
+                       logger='bar', output_pix_fmt=None):
     """ Write the clip to a videofile. See VideoClip.write_videofile for details
     on the parameters.
     """
@@ -217,7 +217,7 @@ def ffmpeg_write_video(clip, filename, fps, codec="libx264", bitrate=None,
     with FFMPEG_VideoWriter(filename, clip.size, fps, codec = codec,
                                 preset=preset, bitrate=bitrate, logfile=logfile,
                                 audiofile=audiofile, threads=threads,
-                                ffmpeg_params=ffmpeg_params) as writer:
+                                ffmpeg_params=ffmpeg_params, output_pix_fmt=output_pix_fmt) as writer:
 
         nframes = int(clip.duration*fps)
 
