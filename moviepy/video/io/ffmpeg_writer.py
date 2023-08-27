@@ -67,7 +67,7 @@ class FFMPEG_VideoWriter:
 
     def __init__(self, filename, size, fps, codec="libx264", audiofile=None,
                  preset="medium", bitrate=None, withmask=False,
-                 logfile=None, threads=None, ffmpeg_params=None, output_pix_fmt=None):
+                 logfile=None, threads=None, ffmpeg_params=None, raw_pix_fmt=None, output_pix_fmt=None):
 
         if logfile is None:
             logfile = sp.PIPE
@@ -77,7 +77,8 @@ class FFMPEG_VideoWriter:
         self.ext = self.filename.split(".")[-1]
 
         # order is important
-        src_pix_fmt = 'rgba' if withmask else 'rgb24'
+        if raw_pix_fmt is None:
+            raw_pix_fmt = 'rgba' if withmask else 'rgb24'
         cmd = [
             get_setting("FFMPEG_BINARY"),
             '-y',
@@ -85,7 +86,7 @@ class FFMPEG_VideoWriter:
             '-f', 'rawvideo',
             '-vcodec', 'rawvideo',
             '-s', '%dx%d' % (size[0], size[1]),
-            '-pix_fmt', src_pix_fmt,
+            '-pix_fmt', raw_pix_fmt,
             '-r', '%.02f' % fps,
             '-an', '-i', '-'
         ]
@@ -203,7 +204,7 @@ class FFMPEG_VideoWriter:
 def ffmpeg_write_video(clip, filename, fps, codec="libx264", bitrate=None,
                        preset="medium", withmask=False, write_logfile=False,
                        audiofile=None, verbose=True, threads=None, ffmpeg_params=None,
-                       logger='bar', output_pix_fmt=None):
+                       logger='bar', raw_pix_fmt=None, output_pix_fmt=None):
     """ Write the clip to a videofile. See VideoClip.write_videofile for details
     on the parameters.
     """
@@ -217,7 +218,9 @@ def ffmpeg_write_video(clip, filename, fps, codec="libx264", bitrate=None,
     with FFMPEG_VideoWriter(filename, clip.size, fps, codec = codec,
                                 preset=preset, bitrate=bitrate, logfile=logfile,
                                 audiofile=audiofile, threads=threads,
-                                ffmpeg_params=ffmpeg_params, output_pix_fmt=output_pix_fmt) as writer:
+                                ffmpeg_params=ffmpeg_params,
+                                raw_pix_fmt=raw_pix_fmt,
+                                output_pix_fmt=output_pix_fmt) as writer:
 
         nframes = int(clip.duration*fps)
 
