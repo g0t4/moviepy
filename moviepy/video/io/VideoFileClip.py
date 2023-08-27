@@ -79,12 +79,13 @@ class VideoFileClip(VideoClip):
                  audio=True, audio_buffersize=200000,
                  target_resolution=None, resize_algorithm='bicubic',
                  audio_fps=44100, audio_nbytes=2, verbose=False,
-                 fps_source='tbr'):
+                 fps_source='tbr', pix_fmt=None):
 
         VideoClip.__init__(self)
 
         # Make a reader
-        pix_fmt = "rgba" if has_mask else "rgb24"
+        if pix_fmt is None:
+          pix_fmt = "rgba" if has_mask else "rgb24"
         self.reader = FFMPEG_VideoReader(filename, pix_fmt=pix_fmt,
                                          target_resolution=target_resolution,
                                          resize_algo=resize_algorithm,
