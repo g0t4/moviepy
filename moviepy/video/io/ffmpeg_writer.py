@@ -112,7 +112,7 @@ class FFMPEG_VideoWriter:
                 (size[0] % 2 == 0) and
                 (size[1] % 2 == 0)):
             if output_pix_fmt is None:
-                output_pix_fmt = 'yuv420p'
+                output_pix_fmt = 'yuv444p'
             cmd.extend([
                 '-pix_fmt', output_pix_fmt
             ])
