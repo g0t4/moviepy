@@ -48,6 +48,7 @@ def test_write_pix_fmt_rgb24_to_yuv420p(yuv_pix_fmt):
     tmp_video_output = os.path.join(TMP_DIR, "test.mp4")
     clip.write_videofile(tmp_video_output, codec='libx264', output_pix_fmt=yuv_pix_fmt)
 
+    # GOOD NEWS => I can control the final format to specify yuv444p when using moviepy and don't need to override it in moviepy's source code! I will consider this enough of a win for now as I am going to test recording yuv444p => read rgb24 => moviepy frames => write yuv444p and see if I like that quality even better, I was already impressed with yuv422p => rgb24 moviepy => yuv420p/422p! I bet yuv444p will take it up a notch higher than I even need it! and if that is the case then I would prefer to work with rgb24 anyways as it is fast/easy to display/manipulate and when I use ImageClips those will all need to be rgb24 anyways!
     entries = ffprobe_stream(tmp_video_output)
     assert entries['pix_fmt'] == yuv_pix_fmt
 
