@@ -97,8 +97,11 @@ class FFMPEG_VideoWriter:
             ])
         cmd.extend([
             '-vcodec', codec,
-            '-preset', preset, # FYI medium is fine, likely should be configurable (I might want a superfast option for rapid testing vs slow for publishing export)
         ])
+        if preset is not None:
+            cmd.extend([
+                '-preset', preset
+            ])
         if ffmpeg_params is not None:
             cmd.extend(ffmpeg_params)
         if bitrate is not None:
