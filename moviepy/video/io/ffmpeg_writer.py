@@ -67,7 +67,7 @@ class FFMPEG_VideoWriter:
 
     def __init__(self, filename, size, fps, codec="libx264", audiofile=None,
                  preset="medium", bitrate=None, withmask=False,
-                 logfile=None, threads=None, ffmpeg_params=None):
+                 logfile=None, threads=None, ffmpeg_params=None, output_pix_fmt=None):
 
         if logfile is None:
             logfile = sp.PIPE
@@ -108,7 +108,6 @@ class FFMPEG_VideoWriter:
         if threads is not None:
             cmd.extend(["-threads", str(threads)])
 
-        output_pix_fmt = None
         if ((codec == 'libx264') and
                 (size[0] % 2 == 0) and
                 (size[1] % 2 == 0)):
