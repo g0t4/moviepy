@@ -896,13 +896,17 @@ class ImageClip(VideoClip):
 
             if img.shape[2] == 4:
                 if fromalpha:
+                    print("ImageClip.4.fromalpha")
                     img = 1.0 * img[:, :, 3] / 255
                 elif ismask:
+                    print("ImageClip.4.ismask")
                     img = 1.0 * img[:, :, 0] / 255
                 elif transparent:
+                    print("ImageClip.4.transparent")
                     self.mask = ImageClip(
                         1.0 * img[:, :, 3] / 255, ismask=True)
                     img = img[:, :, :3]
+                    img = np.array(img) # ensure contiguous, build here instead of every time its used (ie to display which often requires contiguous)
             elif ismask:
                 img = 1.0 * img[:, :, 0] / 255
 
